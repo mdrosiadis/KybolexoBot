@@ -1,5 +1,9 @@
 from collections import defaultdict
 import json
+import asyncio
+import websockets
+
+SERVE_PORT = 5678
 HOR_LEN  = 38
 VERT_LEN = 39
 
@@ -80,16 +84,18 @@ print(TrieNode.nodes)
 # print(root.search_word("ΦΤΗΝΟΣ"))
 
 # parse json game state
-with open("sample_game_state.json", 'r') as f:
-    game_state = json.load(f)
+# with open("sample_game_state.json", 'r') as f:
+#     game_state = json.load(f)
 
+def parse_game_state(json_data):
+    board = [[] for _ in range(GAME_COLUMNS)]
+    for letter in json_data["game_board"]:
+        board[letter["x"]].append(letter)
 
-board = [[] for _ in range(GAME_COLUMNS)]
-for letter in game_state["game_board"]:
-    board[letter["x"]].append(letter)
+    for column in board:
+        column.sort(key=lambda letter: letter["y"])
 
-for column in board:
-    column.sort(key=lambda letter: letter["y"])
+    return board
 
 
 def print_game_board(board):
@@ -116,6 +122,9 @@ def search_words(board, unique_only=True):
     def board_dfs():
         nonlocal word_iterator, points, bonus_multiplier
         for column, depth in enumerate(current_state):
+            if depth >= len(board[column]):
+                continue
+
             next_letter = board[column][depth]["letter"]
             if next_letter not in word_iterator.edges:
                 continue
@@ -128,7 +137,7 @@ def search_words(board, unique_only=True):
             elif bonus.endswith("Λ"):
                 extra_multiplier = int(bonus[0])
 
-            moves.append(column)
+            moves.append({"x": board[column][depth]["x"], "y": board[column][depth]["y"]})
             current_word.append(next_letter)
             current_state[column] += 1
             points += letter_points
@@ -138,7 +147,10 @@ def search_words(board, unique_only=True):
 
             # TODO: calculate points while searching
             if word_iterator.terminal_word is not None:
-                word_points = points * (1+bonus_multiplier) * MULTIPLIERS[len(word_iterator.terminal_word)]
+                final_multiplier = 1
+                if bonus_multiplier > 0:
+                    final_multiplier = bonus_multiplier
+                word_points = points * final_multiplier * MULTIPLIERS[len(word_iterator.terminal_word)]
                 solutions.append((word_iterator.terminal_word,
                                  word_points,
                                  moves.copy()))
@@ -171,15 +183,35 @@ def search_words(board, unique_only=True):
     return solutions
 
 
-print_game_board(board)
-solutions = search_words(board)
 
-print(f"Found {len(solutions)} possible words")
-print("Best solutions:")
+async def solve_boards(websocket):
+    async for json_data in websocket:
+        # json_data = await websocket.recv()
+        board = parse_game_state(json.loads(json_data))
 
-for solution in solutions[:min(SOLUTIONS_TO_SHOW, len(solutions))]:
-    print("{:15s} {:3d} points {}".format(solution[0],
-                                          solution[1],
-                                          '->'.join(map(str, solution[2])
-                                          )))
+        print_game_board(board)
+        solutions = search_words(board)
+        solutions = solutions[:min(SOLUTIONS_TO_SHOW, len(solutions))]
+        print(solutions)
+        await websocket.send(json.dumps(solutions))
+
+
+async def main():
+    async with websockets.serve(solve_boards, "localhost", SERVE_PORT):
+        await asyncio.Future()  # run forever
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
+# print_game_board(board)
+# solutions = search_words(board)
+
+# print(f"Found {len(solutions)} possible words")
+# print("Best solutions:")
+
+# for solution in solutions[:min(SOLUTIONS_TO_SHOW, len(solutions))]:
+#     print("{:15s} {:3d} points {}".format(solution[0],
+#                                           solution[1],
+#                                           '->'.join(map(str, solution[2])
+#                                           )))
 
