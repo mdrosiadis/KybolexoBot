@@ -3,6 +3,7 @@ import json
 HOR_LEN  = 38
 VERT_LEN = 39
 
+SOLUTIONS_TO_SHOW = 5
 GAME_COLUMNS = 10
 
 LETTER_POINTS = {
@@ -70,12 +71,12 @@ class TrieNode:
         return self.get_child(next_char).search_word(word, word_index+1)
 
 
-# root = TrieNode(None)
-# with open("wordlist.txt", 'r') as f:
-#     for line in f:
-#         root.push_word(line.strip())
+root = TrieNode(None)
+with open("wordlist.txt", 'r') as f:
+    for line in f:
+        root.push_word(line.strip())
 
-# print(TrieNode.nodes)
+print(TrieNode.nodes)
 # print(root.search_word("ΦΤΗΝΟΣ"))
 
 # parse json game state
@@ -103,4 +104,82 @@ def print_game_board(board):
         print()
 
 
+def search_words(board, unique_only=True):
+    moves = []
+    current_state = [0 for _ in range(GAME_COLUMNS)]
+    solutions = []
+    current_word = []
+
+    word_iterator = root
+    points = 0
+    bonus_multiplier = 0
+    def board_dfs():
+        nonlocal word_iterator, points, bonus_multiplier
+        for column, depth in enumerate(current_state):
+            next_letter = board[column][depth]["letter"]
+            if next_letter not in word_iterator.edges:
+                continue
+
+            letter_points = LETTER_POINTS[next_letter]
+            extra_multiplier = 0
+            bonus = board[column][depth]["bonus"]
+            if bonus.endswith("Γ"):
+                letter_points *= int(bonus[0])
+            elif bonus.endswith("Λ"):
+                extra_multiplier = int(bonus[0])
+
+            moves.append(column)
+            current_word.append(next_letter)
+            current_state[column] += 1
+            points += letter_points
+            bonus_multiplier += extra_multiplier
+
+            word_iterator = word_iterator.get_child(next_letter)
+
+            # TODO: calculate points while searching
+            if word_iterator.terminal_word is not None:
+                word_points = points * (1+bonus_multiplier) * MULTIPLIERS[len(word_iterator.terminal_word)]
+                solutions.append((word_iterator.terminal_word,
+                                 word_points,
+                                 moves.copy()))
+
+            board_dfs()
+
+            moves.pop()
+            current_word.pop()
+            current_state[column] -= 1
+            word_iterator = word_iterator.parent
+            points -= letter_points
+            bonus_multiplier -= extra_multiplier
+
+
+    # call dfs
+    board_dfs()
+
+    solutions.sort(key=lambda s: s[1], reverse=True)
+
+    if unique_only:
+        unique_words = set()
+        clean_solutions = []
+        for solution in solutions:
+            if solution[0] not in unique_words:
+                clean_solutions.append(solution)
+                unique_words.add(solution[0])
+
+        solutions = clean_solutions
+
+    return solutions
+
+
+print_game_board(board)
+solutions = search_words(board)
+
+print(f"Found {len(solutions)} possible words")
+print("Best solutions:")
+
+for solution in solutions[:min(SOLUTIONS_TO_SHOW, len(solutions))]:
+    print("{:15s} {:3d} points {}".format(solution[0],
+                                          solution[1],
+                                          '->'.join(map(str, solution[2])
+                                          )))
 
