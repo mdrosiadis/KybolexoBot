@@ -1,0 +1,546 @@
+{
+	"players": [
+		{
+			"name": "test_account1",
+			"elo": 1000,
+			"score": 11,
+			"isActive": false
+		},
+		{
+			"name": "test_account2",
+			"elo": 1000,
+			"score": 17,
+			"isActive": false
+		}
+	],
+	"game_board": [
+		{
+			"x": 0,
+			"y": 9,
+			"letter": "Ο",
+			"bonus": "2Γ"
+		},
+		{
+			"x": 1,
+			"y": 9,
+			"letter": "Ε",
+			"bonus": ""
+		},
+		{
+			"x": 2,
+			"y": 9,
+			"letter": "Η",
+			"bonus": ""
+		},
+		{
+			"x": 3,
+			"y": 9,
+			"letter": "Ν",
+			"bonus": ""
+		},
+		{
+			"x": 4,
+			"y": 9,
+			"letter": "Τ",
+			"bonus": "2Λ"
+		},
+		{
+			"x": 5,
+			"y": 9,
+			"letter": "Ε",
+			"bonus": ""
+		},
+		{
+			"x": 6,
+			"y": 9,
+			"letter": "Ρ",
+			"bonus": ""
+		},
+		{
+			"x": 7,
+			"y": 9,
+			"letter": "Θ",
+			"bonus": ""
+		},
+		{
+			"x": 8,
+			"y": 9,
+			"letter": "Ε",
+			"bonus": ""
+		},
+		{
+			"x": 9,
+			"y": 9,
+			"letter": "Ν",
+			"bonus": ""
+		},
+		{
+			"x": 0,
+			"y": 8,
+			"letter": "Α",
+			"bonus": ""
+		},
+		{
+			"x": 1,
+			"y": 8,
+			"letter": "Α",
+			"bonus": "2Γ"
+		},
+		{
+			"x": 2,
+			"y": 8,
+			"letter": "Α",
+			"bonus": ""
+		},
+		{
+			"x": 3,
+			"y": 8,
+			"letter": "Ο",
+			"bonus": ""
+		},
+		{
+			"x": 4,
+			"y": 8,
+			"letter": "Ο",
+			"bonus": "3Γ"
+		},
+		{
+			"x": 5,
+			"y": 8,
+			"letter": "Ξ",
+			"bonus": ""
+		},
+		{
+			"x": 6,
+			"y": 8,
+			"letter": "Φ",
+			"bonus": ""
+		},
+		{
+			"x": 7,
+			"y": 8,
+			"letter": "Ο",
+			"bonus": ""
+		},
+		{
+			"x": 8,
+			"y": 8,
+			"letter": "Ι",
+			"bonus": ""
+		},
+		{
+			"x": 9,
+			"y": 8,
+			"letter": "Μ",
+			"bonus": ""
+		},
+		{
+			"x": 0,
+			"y": 7,
+			"letter": "Σ",
+			"bonus": "2Λ"
+		},
+		{
+			"x": 1,
+			"y": 7,
+			"letter": "Ι",
+			"bonus": ""
+		},
+		{
+			"x": 2,
+			"y": 7,
+			"letter": "Ρ",
+			"bonus": "2Γ"
+		},
+		{
+			"x": 3,
+			"y": 7,
+			"letter": "Π",
+			"bonus": "3Γ"
+		},
+		{
+			"x": 4,
+			"y": 7,
+			"letter": "Ω",
+			"bonus": "3Γ"
+		},
+		{
+			"x": 5,
+			"y": 7,
+			"letter": "Ι",
+			"bonus": ""
+		},
+		{
+			"x": 6,
+			"y": 7,
+			"letter": "Α",
+			"bonus": ""
+		},
+		{
+			"x": 7,
+			"y": 7,
+			"letter": "Ι",
+			"bonus": ""
+		},
+		{
+			"x": 8,
+			"y": 7,
+			"letter": "Δ",
+			"bonus": ""
+		},
+		{
+			"x": 9,
+			"y": 7,
+			"letter": "Ρ",
+			"bonus": "2Γ"
+		},
+		{
+			"x": 0,
+			"y": 6,
+			"letter": "Π",
+			"bonus": ""
+		},
+		{
+			"x": 1,
+			"y": 6,
+			"letter": "Χ",
+			"bonus": ""
+		},
+		{
+			"x": 2,
+			"y": 6,
+			"letter": "Ν",
+			"bonus": ""
+		},
+		{
+			"x": 3,
+			"y": 6,
+			"letter": "Ο",
+			"bonus": ""
+		},
+		{
+			"x": 4,
+			"y": 6,
+			"letter": "Χ",
+			"bonus": ""
+		},
+		{
+			"x": 5,
+			"y": 6,
+			"letter": "Χ",
+			"bonus": ""
+		},
+		{
+			"x": 6,
+			"y": 6,
+			"letter": "Μ",
+			"bonus": ""
+		},
+		{
+			"x": 7,
+			"y": 6,
+			"letter": "Ρ",
+			"bonus": ""
+		},
+		{
+			"x": 8,
+			"y": 6,
+			"letter": "Ο",
+			"bonus": ""
+		},
+		{
+			"x": 9,
+			"y": 6,
+			"letter": "Β",
+			"bonus": ""
+		},
+		{
+			"x": 0,
+			"y": 5,
+			"letter": "Ν",
+			"bonus": ""
+		},
+		{
+			"x": 1,
+			"y": 5,
+			"letter": "Υ",
+			"bonus": ""
+		},
+		{
+			"x": 2,
+			"y": 5,
+			"letter": "Ε",
+			"bonus": ""
+		},
+		{
+			"x": 3,
+			"y": 5,
+			"letter": "Γ",
+			"bonus": ""
+		},
+		{
+			"x": 4,
+			"y": 5,
+			"letter": "Τ",
+			"bonus": ""
+		},
+		{
+			"x": 5,
+			"y": 5,
+			"letter": "Σ",
+			"bonus": ""
+		},
+		{
+			"x": 6,
+			"y": 5,
+			"letter": "Σ",
+			"bonus": ""
+		},
+		{
+			"x": 7,
+			"y": 5,
+			"letter": "Β",
+			"bonus": ""
+		},
+		{
+			"x": 8,
+			"y": 5,
+			"letter": "Κ",
+			"bonus": ""
+		},
+		{
+			"x": 9,
+			"y": 5,
+			"letter": "Α",
+			"bonus": ""
+		},
+		{
+			"x": 0,
+			"y": 4,
+			"letter": "Σ",
+			"bonus": ""
+		},
+		{
+			"x": 1,
+			"y": 4,
+			"letter": "Β",
+			"bonus": ""
+		},
+		{
+			"x": 2,
+			"y": 4,
+			"letter": "Ο",
+			"bonus": ""
+		},
+		{
+			"x": 3,
+			"y": 4,
+			"letter": "Ν",
+			"bonus": ""
+		},
+		{
+			"x": 4,
+			"y": 4,
+			"letter": "Γ",
+			"bonus": ""
+		},
+		{
+			"x": 5,
+			"y": 4,
+			"letter": "Η",
+			"bonus": ""
+		},
+		{
+			"x": 6,
+			"y": 4,
+			"letter": "Φ",
+			"bonus": ""
+		},
+		{
+			"x": 7,
+			"y": 4,
+			"letter": "Α",
+			"bonus": ""
+		},
+		{
+			"x": 8,
+			"y": 4,
+			"letter": "Η",
+			"bonus": ""
+		},
+		{
+			"x": 9,
+			"y": 4,
+			"letter": "Ε",
+			"bonus": ""
+		},
+		{
+			"x": 0,
+			"y": 3,
+			"letter": "Τ",
+			"bonus": ""
+		},
+		{
+			"x": 1,
+			"y": 3,
+			"letter": "Ν",
+			"bonus": ""
+		},
+		{
+			"x": 2,
+			"y": 3,
+			"letter": "Τ",
+			"bonus": ""
+		},
+		{
+			"x": 3,
+			"y": 3,
+			"letter": "Ο",
+			"bonus": ""
+		},
+		{
+			"x": 4,
+			"y": 3,
+			"letter": "Α",
+			"bonus": ""
+		},
+		{
+			"x": 5,
+			"y": 3,
+			"letter": "Ε",
+			"bonus": ""
+		},
+		{
+			"x": 6,
+			"y": 3,
+			"letter": "Δ",
+			"bonus": ""
+		},
+		{
+			"x": 7,
+			"y": 3,
+			"letter": "Ε",
+			"bonus": ""
+		},
+		{
+			"x": 8,
+			"y": 3,
+			"letter": "Ζ",
+			"bonus": ""
+		},
+		{
+			"x": 9,
+			"y": 3,
+			"letter": "Ε",
+			"bonus": ""
+		},
+		{
+			"x": 0,
+			"y": 2,
+			"letter": "Ι",
+			"bonus": ""
+		},
+		{
+			"x": 1,
+			"y": 2,
+			"letter": "Η",
+			"bonus": ""
+		},
+		{
+			"x": 2,
+			"y": 2,
+			"letter": "Χ",
+			"bonus": ""
+		},
+		{
+			"x": 3,
+			"y": 2,
+			"letter": "Κ",
+			"bonus": ""
+		},
+		{
+			"x": 4,
+			"y": 2,
+			"letter": "Δ",
+			"bonus": ""
+		},
+		{
+			"x": 5,
+			"y": 2,
+			"letter": "Σ",
+			"bonus": ""
+		},
+		{
+			"x": 6,
+			"y": 2,
+			"letter": "Μ",
+			"bonus": ""
+		},
+		{
+			"x": 8,
+			"y": 2,
+			"letter": "Η",
+			"bonus": ""
+		},
+		{
+			"x": 9,
+			"y": 2,
+			"letter": "Ε",
+			"bonus": ""
+		},
+		{
+			"x": 0,
+			"y": 1,
+			"letter": "Π",
+			"bonus": ""
+		},
+		{
+			"x": 1,
+			"y": 1,
+			"letter": "Μ",
+			"bonus": ""
+		},
+		{
+			"x": 2,
+			"y": 1,
+			"letter": "Ξ",
+			"bonus": ""
+		},
+		{
+			"x": 3,
+			"y": 1,
+			"letter": "Ο",
+			"bonus": ""
+		},
+		{
+			"x": 4,
+			"y": 1,
+			"letter": "Μ",
+			"bonus": ""
+		},
+		{
+			"x": 6,
+			"y": 1,
+			"letter": "Ο",
+			"bonus": ""
+		},
+		{
+			"x": 8,
+			"y": 1,
+			"letter": "Ν",
+			"bonus": ""
+		},
+		{
+			"x": 2,
+			"y": 0,
+			"letter": "Ο",
+			"bonus": ""
+		},
+		{
+			"x": 4,
+			"y": 0,
+			"letter": "Λ",
+			"bonus": ""
+		}
+	]
+}

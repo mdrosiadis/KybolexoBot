@@ -1,14 +1,14 @@
-const HOR_LEN = 38;
-const VER_LEN = 39;
-const LETTERS_PER_LINE = 6;
-const greekLetters = "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ";
+HOR_LEN = 38;
+VER_LEN = 39;
+LETTERS_PER_LINE = 6;
+greekLetters = "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ";
 
-const player_divs = [
+player_divs = [
 	document.querySelector("#cubeword_player1"),
 	document.querySelector("#cubeword_player2")
 ];
 
-const game_board = document.querySelector("#cubeWordBoardContainer");
+game_board = document.querySelector("#cubeWordBoardContainer");
 
 
 function parseLetter(domelem) {
@@ -38,3 +38,5 @@ function getGameState() {
 		game_board: all_letters.map(parseLetter)
 	};
 }
+
+console.log(JSON.stringify(getGameState()));
