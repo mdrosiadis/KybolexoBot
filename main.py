@@ -10,6 +10,9 @@ VERT_LEN = 39
 SOLUTIONS_TO_SHOW = 5
 GAME_COLUMNS = 10
 
+MAX_WORD_SIZE = 13
+WORDLIST = "new_wordlists/extended_wordlist.txt"
+
 LETTER_POINTS = {
     'Α':  1, 'Β':  8, 'Γ':  4, 'Δ':  4, 'Ε':  1, 'Ζ': 10,
     'Η':  1, 'Θ': 10, 'Ι':  1, 'Κ':  2, 'Λ':  3, 'Μ':  3,
@@ -26,6 +29,7 @@ def expected_word_points(word):
 
 class TrieNode:
     nodes = 0
+    final_nodes = 0
 
     def __init__(self, parent, word=None):
         self.terminal_word = word
@@ -36,6 +40,7 @@ class TrieNode:
 
 
     def set_terminal(self, word):
+        TrieNode.final_nodes += 1
         self.terminal_word = word
         self.terminal_points = expected_word_points(word)
 
@@ -76,11 +81,13 @@ class TrieNode:
 
 
 root = TrieNode(None)
-with open("wordlist.txt", 'r') as f:
+with open(WORDLIST, 'r') as f:
     for line in f:
-        root.push_word(line.strip())
+        line = line.strip()
+        if len(line) <= MAX_WORD_SIZE:
+            root.push_word(line)
 
-print(TrieNode.nodes)
+print(f"Playing with {TrieNode.final_nodes} words ({TrieNode.nodes} nodes)")
 # print(root.search_word("ΦΤΗΝΟΣ"))
 
 # parse json game state
@@ -118,9 +125,9 @@ def search_words(board, unique_only=True):
 
     word_iterator = root
     points = 0
-    bonus_multiplier = 0
+    bonus_multipliers = [1]
     def board_dfs():
-        nonlocal word_iterator, points, bonus_multiplier
+        nonlocal word_iterator, points
         for column, depth in enumerate(current_state):
             if depth >= len(board[column]):
                 continue
@@ -141,16 +148,14 @@ def search_words(board, unique_only=True):
             current_word.append(next_letter)
             current_state[column] += 1
             points += letter_points
-            bonus_multiplier += extra_multiplier
+            if extra_multiplier != 0:
+                bonus_multipliers.append(extra_multiplier)
 
             word_iterator = word_iterator.get_child(next_letter)
 
             # TODO: calculate points while searching
             if word_iterator.terminal_word is not None:
-                final_multiplier = 1
-                if bonus_multiplier > 0:
-                    final_multiplier = bonus_multiplier
-                word_points = points * final_multiplier * MULTIPLIERS[len(word_iterator.terminal_word)]
+                word_points = points * max(bonus_multipliers) * MULTIPLIERS[len(word_iterator.terminal_word)]
                 solutions.append((word_iterator.terminal_word,
                                  word_points,
                                  moves.copy()))
@@ -162,7 +167,8 @@ def search_words(board, unique_only=True):
             current_state[column] -= 1
             word_iterator = word_iterator.parent
             points -= letter_points
-            bonus_multiplier -= extra_multiplier
+            if extra_multiplier != 0:
+                bonus_multipliers.pop()
 
 
     # call dfs

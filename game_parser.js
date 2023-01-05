@@ -3,6 +3,29 @@ const VER_LEN = 39;
 const LETTERS_PER_LINE = 6;
 const greekLetters = "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ";
 
+let solutions = [];
+
+const globalStyles = document.createElement("style");
+globalStyles.innerText = `
+.solution-display-box {
+	position: absolute;
+	background: none;
+	width: ${HOR_LEN}px;
+	height: ${VER_LEN}px;
+	border: 6px solid black;
+	box-sizing: border-box;
+	pointer-events: none;
+	z-index: 99;
+}
+
+@keyframes blink-border { 50% { border-color: #fc03a5;}}
+`;
+
+document.body.appendChild(globalStyles);
+
+function glowNextLetter() {
+	document.querySelector(".solution-display-box").style.animation = "blink-border 0.7s infinite";
+}
 
 
 function parseLetter(domelem) {
@@ -32,7 +55,8 @@ function getGameState() {
 	];
 
 	const game_board = document.querySelector("#cubeWordBoardContainer");
-	const all_letters = [...game_board.children];
+	// const all_letters = [...game_board.children];
+	const all_letters = [...game_board.querySelectorAll(".letterContainer")];
 
 	return {
 		players : player_divs.map(parsePlayer),
@@ -73,18 +97,42 @@ pilot_div.innerHTML = `
 document.body.appendChild(pilot_div);
 // add toggle button
 document.addEventListener('keyup', function(event) {
-  if (event.ctrlKey && event.key === ' ') {
-	  pilot_div.style.visibility = pilot_div.style.visibility === 'visible' ? 'hidden' : 'visible';
-  }
+	if (event.ctrlKey && event.key === ' ') { 
+		pilot_div.style.visibility = pilot_div.style.visibility === 'visible' ? 'hidden' : 'visible';
+	}
+	else if(event.key === '.' || event.key === 'q') {
+		document.querySelector(".solution-display-box").remove();
+		glowNextLetter();
+	}
 });
+
+function displaySolution(sol_idx) {
+	console.log("Displaying solution: ", sol_idx);
+
+	const game_board = document.querySelector("#cubeWordBoardContainer");
+	// delete solution display nodes
+	game_board.querySelectorAll(".solution-display-box").forEach(node => game_board.removeChild(node));
+	
+	const solution = solutions[sol_idx];
+	for(let {x, y} of solution) {
+		let sol_box = document.createElement('div');
+		sol_box.classList.add("solution-display-box");
+		sol_box.style.left = `${(x * HOR_LEN)}px`;
+		sol_box.style.top  = `${(y * VER_LEN)}px`;
+		game_board.appendChild(sol_box);
+	}
+
+	glowNextLetter();
+}
 
 const websocket = new WebSocket("ws://localhost:5678/");
 websocket.onmessage = ({data}) => {
-	console.log(data);
 	const parsed_data = JSON.parse(data);
 	clearAllChildren(solutions_container);
 
-	parsed_data.forEach(([word, points, path]) => {
+	solutions = [];
+
+	parsed_data.forEach(([word, points, path], i) => {
 		const sdiv = document.createElement('div');
 		sdiv.style = `
 			background: lightgray;
@@ -95,8 +143,13 @@ websocket.onmessage = ({data}) => {
 			margin: 5px 0;
 			`;
 		sdiv.innerText = `${word} (${points} πόντοι)`;
+		sdiv.addEventListener("click", (function (si) { return evt => displaySolution(si)})(i));
 		solutions_container.appendChild(sdiv);
+
+		solutions.push(path);
 	});
+
+	displaySolution(0);
 	// solutions_container.innerText = JSON.stringify(parsed_data);
 };
 
@@ -113,5 +166,12 @@ function clearAllChildren(element) {
         element.removeChild(element.lastChild);
     }
 }
+
+document.addEventListener("onkeydown", function(event) {
+	if(event.keyCode == 38) {
+		document.querySelector(".solution-display-box").remove();
+		glowNextLetter();
+	}
+});
 const solutions_container = document.querySelector("#bot-solution-container");
 // console.log(JSON.stringify(getGameState()));
