@@ -7,7 +7,7 @@ A bot for dod.gr game "Κυβόλεξο"
 The bot better plays on Chromium-based broswers. You will need the following plugins:
 
 - [Disable CSP](https://chrome.google.com/webstore/detail/disable-content-security/ieelmcmcagommplceebfedjlakkhpden) (to allow foreign JS)
-- A Javascript Injection plugin like [Scripy](https://chrome.google.com/webstore/detail/scripty-javascript-inject/milkbiaeapddfnpenedfgbfdacpbcbam)
+- A Javascript Injection plugin like [Scripty](https://chrome.google.com/webstore/detail/scripty-javascript-inject/milkbiaeapddfnpenedfgbfdacpbcbam)
 
 ## Installing
 
