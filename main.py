@@ -81,7 +81,7 @@ class TrieNode:
 
 
 root = TrieNode(None)
-with open(WORDLIST, 'r') as f:
+with open(WORDLIST, 'r', encoding="utf-8") as f:
     for line in f:
         line = line.strip()
         if len(line) <= MAX_WORD_SIZE:
